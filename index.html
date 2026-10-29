@@ -3,74 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mi Portafolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>Danzell Paolo | Portafolio</title>
+  
+  <!-- Tipografías elegantes originales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="nav-brand">
+    <a href="#inicio" class="nav-brand">
       <span class="nav-dot"></span>
       <div>
         <span class="nav-name">DANZELL PAOLO</span>
         <span class="nav-title">Desarrollador / Tecnico</span>
       </div>
-    </div>
-    <ul class="nav-links">
-       <li><a href="CV\CV PAOLO.pdf" class="nav-link">CV</a></li>
+    </a>
+    
+    <ul class="nav-links" id="navLinks">
+      <li><a href="CV/CV%20PAOLO.pdf" target="_blank" rel="noopener noreferrer" class="nav-link nav-cv">CV</a></li>
       <li><a href="#inicio" class="nav-link active">Inicio</a></li>
       <li><a href="#sobre-mi" class="nav-link">Sobre mí</a></li>
+      <li><a href="#trayectoria" class="nav-link">Trayectoria</a></li>
       <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
       <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
       <li><a href="#contacto" class="nav-link">Contacto</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
   </nav>
 
-
+  <!-- HERO -->
   <section class="hero" id="inicio">
     <div class="hero-left">
       <div class="photo-ring">
         <div class="photo-placeholder">
-          <img src="img\imagenportafolio2.png" alt="DAMZELL PAOLO ARELLANO PADILLA">
+          <img src="img/imagenportafolio2.png" alt="Danzell Paolo Arellano Padilla">
         </div>
       </div>
     </div>
+    
     <div class="hero-right">
-      <div class="hero-tag">✦ Bienvenido a mi portafolio</div>
+      <div class="hero-tag">Bienvenido a mi portafolio</div>
       <h1 class="hero-name">Danzell<br/><em>Paolo</em></h1>
       <h2 class="hero-subtitle">Desarrollador &amp; Tecnico Informatico</h2>
       <p class="hero-bio">
         Apasionado por crear experiencias digitales únicas. Me especializo en desarrollo web moderno, 
         diseño de interfaces y soluciones creativas que combinan estética con funcionalidad.
       </p>
+      
       <div class="hero-nav-circles">
-        <a href="#sobre-mi" class="circle-btn" style="--c:#7EC8A4">Sobre mí</a>
-        <a href="#proyectos" class="circle-btn" style="--c:#F4A261">Proyectos</a>
-        <a href="#habilidades" class="circle-btn" style="--c:#6BBFD4">Habilidades</a>
-        <a href="#contacto" class="circle-btn" style="--c:#C4C4C4">Contacto</a>
+        <a href="#sobre-mi" class="circle-btn" style="--c:#2ec4b6">Sobre mí</a>
+        <a href="#trayectoria" class="circle-btn" style="--c:#f59e0b">Trayectoria</a>
+        <a href="#proyectos" class="circle-btn" style="--c:#f97316">Proyectos</a>
+        <a href="#habilidades" class="circle-btn" style="--c:#0ea5e9">Habilidades</a>
+        <a href="#contacto" class="circle-btn" style="--c:#e4e4e7">Contacto</a>
       </div>
     </div>
+    
     <div class="hero-deco"></div>
   </section>
 
+  <!-- 01 — SOBRE MÍ -->
   <section class="section sobre-mi" id="sobre-mi">
     <div class="section-inner">
       <div class="section-label">01 — Sobre mí</div>
       <h2 class="section-title">Un poco <em>sobre mí</em></h2>
+      
       <div class="about-grid">
         <div class="about-text">
-          <p>Soy estudiante y profesional con experiencia en <strong>diseño y desarrollo web</strong>. Me apasiona resolver problemas complejos con soluciones elegantes y accesibles.</p>
-          <p>Actualmente estudio y trabajo en proyectos que combinan creatividad y tecnología para generar impacto real. Siempre estoy aprendiendo algo nuevo.</p>
+          <p>
+            Soy estudiante de la <strong>Ingeniería en Tecnología de Software en la UANL</strong> y Técnico en Informática por el CONALEP, con experiencia en <strong>diseño y desarrollo web</strong>. Me apasiona resolver problemas complejos con soluciones elegantes, accesibles y de alto impacto.
+          </p>
+          <p>
+            Actualmente desarrollo proyectos freelance y sistemas web que combinan creatividad y tecnología para resolver necesidades reales de negocio, manteniendo un enfoque constante en el aprendizaje continuo y la excelencia técnica.
+          </p>
           <div class="about-tags">
             <span class="tag">Diseño UI/UX</span>
             <span class="tag">JavaScript</span>
             <span class="tag">Node.js</span>
-            <span class="tag">c++</span>
+            <span class="tag">C++</span>
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Full-Stack</span>
           </div>
         </div>
+        
         <div class="about-stats">
           <div class="stat-card">
             <span class="stat-num">+5</span>
@@ -89,91 +115,428 @@
     </div>
   </section>
 
-  <section class="section proyectos" id="proyectos">
+  <!-- 02 — TRAYECTORIA OLÍMPICA & LIDERAZGO -->
+  <section class="section trayectoria" id="trayectoria">
     <div class="section-inner">
-      <div class="section-label">02 — Proyectos</div>
-      <h2 class="section-title">Mis <em>trabajos</em></h2>
-      <div class="projects-grid">
+      <div class="section-label">02 — Trayectoria &amp; Liderazgo</div>
+      <h2 class="section-title">Logros <em>Olímpicos</em> &amp; Mentoría</h2>
 
-        <div class="project-card" style="--accent:#F4A261">
-          <div class="project-img project-img-1">
-           <img src="img\prewiew primero.png" alt="previa" class="project-emoji">
+      <div class="modular-grid">
+
+        <!-- Tarjeta Modular 1: Trayectoria Olímpica & Programación Competitiva -->
+        <div class="modular-card" style="--accent:#f97316">
+          <div class="modular-card-header">
+            <span class="modular-tag">Competencia Algorítmica</span>
+            <h3 class="modular-title">Trayectoria Olímpica &amp; Programación Competitiva</h3>
           </div>
-          <div class="project-info">
-            <span class="project-tag">Web App</span>
-            <h3>Convertidor de archivos</h3>
-            <p>web ligera que permite visualizar y convertir distintos tipos de archivos directamente en el navegador sin necesidad de instalar software adicional.</p>
-            <div class="project-links">
-              <a href="https://danzellru2.github.io/convertidor/" class="btn-link">Ver demo →</a>
-              <a href="https://github.com/danzellru2/convertidor" class="btn-link-ghost">GitHub</a>
+
+          <div class="modular-body">
+            <!-- Submódulo A: OMI -->
+            <div class="modular-item">
+              <div class="modular-item-top">
+                <span class="modular-role">Participante Destacado</span>
+                <span class="modular-entity">OMI</span>
+              </div>
+              <div class="modular-org">Olimpiada Mexicana de Informática</div>
+              <p class="modular-desc">
+                Resolución de problemas de alta complejidad bajo restricciones estrictas de tiempo y memoria, aplicando algoritmos de grafos, programación dinámica y estructuras de datos eficientes.
+              </p>
+              <div class="modular-chips">
+                <span class="chip">Algoritmos de Grafos</span>
+                <span class="chip">Programación Dinámica</span>
+                <span class="chip">Estructuras de Datos</span>
+                <span class="chip">Optimización de Recursos</span>
+              </div>
+            </div>
+
+            <!-- Submódulo B: OVI -->
+            <div class="modular-item">
+              <div class="modular-item-top">
+                <span class="modular-role">Medalla de Plata</span>
+                <span class="modular-entity">OVI</span>
+              </div>
+              <div class="modular-org">Olimpiada Veracruzana de Informática</div>
+              <p class="modular-desc">
+                Obtención de medalla de plata a nivel estatal, demostrando alto rendimiento en resolución de problemas algorítmicos complejos, rapidez de implementación en C++ y precisión lógica.
+              </p>
+              <div class="modular-chips">
+                <span class="chip">Medalla de Plata</span>
+                <span class="chip">Fase Estatal</span>
+                <span class="chip">Precisión Lógica</span>
+                <span class="chip">C++</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="project-card" style="--accent:#F4A261">
-          <div class="project-img project-img-1">
-           <img src="img\flowi-promo-instagram.svg" alt="previa" class="project-emoji">
+
+        <!-- Tarjeta Modular 2: Mentoría & Liderazgo Técnico -->
+        <div class="modular-card" style="--accent:#2ec4b6">
+          <div class="modular-card-header">
+            <span class="modular-tag">Formación &amp; Comunidad</span>
+            <h3 class="modular-title">Mentoría &amp; Liderazgo Técnico</h3>
           </div>
-          <div class="project-info">
-            <span class="project-tag">Web App</span>
-            <h3>Flowi sistema organizador de tareas</h3>
-            <p>web sistema web que te permite organizar y hacer mas eficiente tu tiempo organizando tus tareas. tiene gemini incluido</p>
-            <div class="project-links">
-              <a href="https://www.flowi.site/login" class="btn-link">Ver demo →</a>
-              <a href="https://github.com/danzellru2/Flowo" class="btn-link-ghost">GitHub</a>
+
+          <div class="modular-body">
+            <!-- Submódulo A: OFMI -->
+            <div class="modular-item">
+              <div class="modular-item-top">
+                <span class="modular-role">Instructor Algorítmico &amp; Entrenador</span>
+                <span class="modular-entity">OFMI</span>
+              </div>
+              <div class="modular-org">Olimpiada Femenil Mexicana de Informática</div>
+              <p class="modular-desc">
+                Diseño e impartición de entrenamientos avanzados para competidoras en fases estatales y nacionales. Fomento de la inclusión de mujeres en tecnología de alto nivel mediante sesiones de resolución guiada, diseño curricular de algoritmos y simulaciones de concurso en tiempo real.
+              </p>
+              <div class="modular-chips">
+                <span class="chip">Entrenamientos Avanzados</span>
+                <span class="chip">Inclusión en Tecnología</span>
+                <span class="chip">Diseño Curricular</span>
+                <span class="chip">Simulaciones en Tiempo Real</span>
+                <span class="chip">Resolución Guiada</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="project-card" style="--accent:#F4A261">
-          <div class="project-img project-img-1">
-           <img src="img\workhr-post-ig-cuadrado.jpg" alt="previa" class="project-emoji">
-          </div>
-          <div class="project-info">
-            <span class="project-tag">Web App</span>
-            <h3>WorkHR Administrador de personal</h3>
-            <p>web que permite a empresas pequeñas y medianas tener un medio para que puedan organizar mejor a su equipo</p>
-            <div class="project-links">
-              <a href="https://www.workhr.site/"  class="btn-link" >Ver demo →</a>
-              <a href="https://github.com/danzellru2/sistema-rrhh" class="btn-link-ghost">GitHub</a>
-            </div>
-          </div>
-        </div>
-
-      
-
-
 
       </div>
     </div>
   </section>
+
+  <!-- 03 — PROYECTOS -->
+  <section class="section proyectos" id="proyectos">
+    <div class="section-inner">
+      <div class="section-label">03 — Proyectos</div>
+      <h2 class="section-title">Mis <em>trabajos</em></h2>
+      
+      <div class="deck-contenedor">
+
+        <!-- Card 1: Convertidor de archivos -->
+        <div class="deck-card principal" id="card-1" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
+          <div class="card-image" style="background-color: #f97316;">
+            <img src="img/prewiew primero.png" alt="Convertidor de archivos">
+          </div>
+          <div class="card-content">
+            <span class="project-tag">Web App</span>
+            <h3>Convertidor de archivos</h3>
+            <p>Web ligera que permite visualizar y convertir distintos tipos de archivos directamente en el navegador sin necesidad de instalar software adicional.</p>
+            <div class="project-links">
+              <a href="https://danzellru2.github.io/convertidor/" target="_blank" rel="noopener noreferrer" class="btn-link">Ver demo →</a>
+              <a href="https://github.com/danzellru2/convertidor" target="_blank" rel="noopener noreferrer" class="btn-link-ghost">GitHub</a>
+            </div>
+            <div class="card-navigation">
+              <div class="dots-wrapper">
+                <span class="dot active-dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+              <div class="buttons">
+                <button onclick="nextCard()" class="next-button" aria-label="Siguiente">&#8594;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Flowi -->
+        <div class="deck-card siguiente" id="card-2" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
+          <div class="card-image" style="background-color: #2ec4b6;">
+            <img src="img/flowi-promo-instagram.svg" alt="Flowi sistema organizador">
+          </div>
+          <div class="card-content">
+            <span class="project-tag">Web App &amp; IA</span>
+            <h3>Flowi sistema organizador de tareas</h3>
+            <p>Sistema web que te permite organizar y hacer más eficiente tu tiempo optimizando tus tareas diarias, con integración de inteligencia artificial de Gemini.</p>
+            <div class="project-links">
+              <a href="https://www.flowi.site/login" target="_blank" rel="noopener noreferrer" class="btn-link">Ver demo →</a>
+              <a href="https://github.com/danzellru2/Flowo" target="_blank" rel="noopener noreferrer" class="btn-link-ghost">GitHub</a>
+            </div>
+            <div class="card-navigation">
+              <div class="dots-wrapper">
+                <span class="dot"></span>
+                <span class="dot active-dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+              <div class="buttons">
+                <button onclick="previousCard()" class="previous-button" aria-label="Anterior">&#8592;</button>
+                <button onclick="nextCard()" class="next-button" aria-label="Siguiente">&#8594;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: WorkHR -->
+        <div class="deck-card siguiente2" id="card-3" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
+          <div class="card-image" style="background-color: #0ea5e9;">
+            <img src="img/workhr-post-ig-cuadrado.jpg" alt="WorkHR Administrador de personal">
+          </div>
+          <div class="card-content">
+            <span class="project-tag">SaaS RRHH</span>
+            <h3>WorkHR Administrador de personal</h3>
+            <p>Plataforma web diseñada para que pequeñas y medianas empresas puedan centralizar, coordinar y organizar mejor la información de su equipo.</p>
+            <div class="project-links">
+              <a href="https://www.workhr.site/" target="_blank" rel="noopener noreferrer" class="btn-link">Ver demo →</a>
+              <a href="https://github.com/danzellru2/sistema-rrhh" target="_blank" rel="noopener noreferrer" class="btn-link-ghost">GitHub</a>
+            </div>
+            <div class="card-navigation">
+              <div class="dots-wrapper">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active-dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+              <div class="buttons">
+                <button onclick="previousCard()" class="previous-button" aria-label="Anterior">&#8592;</button>
+                <button onclick="nextCard()" class="next-button" aria-label="Siguiente">&#8594;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: FitNets App -->
+        <div class="deck-card oculto-derecha" id="card-4" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
+          <div class="card-image" style="background-color: #10b981;">
+            <div class="card-icon-wrapper icon-fitnets">
+              <svg viewBox="0 0 120 120" class="svg-animated-icon" aria-hidden="true">
+                <!-- Pulso cardíaco / ECG de fondo -->
+                <path d="M 15 88 L 38 88 L 44 76 L 50 98 L 56 68 L 62 92 L 68 88 L 105 88" fill="none" stroke="#a7f3d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ecg-line" />
+                <!-- Mancuerna animada con levantamiento rítmico -->
+                <g class="animated-dumbbell">
+                  <!-- Barra -->
+                  <line x1="38" y1="52" x2="82" y2="52" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" />
+                  <!-- Discos izquierdos -->
+                  <rect x="30" y="38" width="8" height="28" rx="2.5" fill="#ffffff" />
+                  <rect x="24" y="43" width="6" height="18" rx="2" fill="#d1fae5" />
+                  <!-- Discos derechos -->
+                  <rect x="82" y="38" width="8" height="28" rx="2.5" fill="#ffffff" />
+                  <rect x="90" y="43" width="6" height="18" rx="2" fill="#d1fae5" />
+                </g>
+                <!-- Keypoints de Pose Detection IA (ML Kit) -->
+                <g class="pose-detection">
+                  <!-- Nodos de articulaciones con líneas de tracking -->
+                  <line x1="60" y1="28" x2="48" y2="40" stroke="#fef08a" stroke-width="1.8" stroke-dasharray="2 2" />
+                  <line x1="60" y1="28" x2="72" y2="40" stroke="#fef08a" stroke-width="1.8" stroke-dasharray="2 2" />
+                  <!-- Cabeza / Keypoint central -->
+                  <circle cx="60" cy="28" r="5" fill="#fef08a" class="pose-point point-head" />
+                  <!-- Hombros -->
+                  <circle cx="48" cy="40" r="4" fill="#ffffff" class="pose-point point-shoulder-l" />
+                  <circle cx="72" cy="40" r="4" fill="#ffffff" class="pose-point point-shoulder-r" />
+                  <!-- Anillo de detección de visión artificial -->
+                  <circle cx="60" cy="28" r="9" fill="none" stroke="#fef08a" stroke-width="1.2" class="ai-vision-ring" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="card-content">
+            <span class="project-tag">Mobile &amp; IA</span>
+            <h3>FitNets Asistente Fitness con IA</h3>
+            <p>Aplicación móvil en Flutter con visión artificial (Google ML Kit Pose Detection) y Supabase para análisis biomecánico y seguimiento de rutinas en tiempo real.</p>
+            <div class="project-links">
+              <a href="https://github.com/danzellru2/nameolympus" target="_blank" rel="noopener noreferrer" class="btn-link">Ver GitHub →</a>
+              <a href="#contacto" class="btn-link-ghost">Solicitar APK</a>
+            </div>
+            <div class="card-navigation">
+              <div class="dots-wrapper">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active-dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+              <div class="buttons">
+                <button onclick="previousCard()" class="previous-button" aria-label="Anterior">&#8592;</button>
+                <button onclick="nextCard()" class="next-button" aria-label="Siguiente">&#8594;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Traductor HUD de Juegos -->
+        <div class="deck-card oculto-derecha" id="card-5" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
+          <div class="card-image" style="background-color: #8b5cf6;">
+            <div class="card-icon-wrapper icon-hud">
+              <svg viewBox="0 0 120 120" class="svg-animated-icon" aria-hidden="true">
+                <!-- Marco / Retícula HUD Gamer -->
+                <g class="hud-frame" stroke="#ffffff" stroke-width="2.5" fill="none">
+                  <path d="M 24 38 L 24 26 L 36 26" />
+                  <path d="M 84 26 L 96 26 L 96 38" />
+                  <path d="M 24 82 L 24 94 L 36 94" />
+                  <path d="M 84 94 L 96 94 L 96 82" />
+                </g>
+                <!-- Texto HUD reconocido (A ⇄ 文) -->
+                <g class="hud-text-group">
+                  <text x="40" y="66" font-family="'DM Sans', sans-serif" font-weight="800" font-size="22" fill="#ffffff" text-anchor="middle">A</text>
+                  <path d="M 52 56 L 68 56 M 64 52 L 68 56 L 64 60" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M 68 64 L 52 64 M 56 60 L 52 64 L 56 68" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <text x="80" y="66" font-family="'DM Sans', sans-serif" font-weight="800" font-size="20" fill="#fde047" text-anchor="middle">文</text>
+                </g>
+                <!-- Línea láser de escaneo OCR animada -->
+                <line x1="26" y1="60" x2="94" y2="60" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" class="hud-laser" />
+                <!-- Puntos de retícula táctica -->
+                <circle cx="60" cy="26" r="2" fill="#38bdf8" />
+                <circle cx="60" cy="94" r="2" fill="#38bdf8" />
+              </svg>
+            </div>
+          </div>
+          <div class="card-content">
+            <span class="project-tag">Desktop &amp; OCR</span>
+            <h3>Traductor HUD de Juegos para Steam</h3>
+            <p>Software en Python con overlay transparente click-through que reconoce y traduce subtítulos de juegos en tiempo real mediante OCR acelerado por hardware de Windows.</p>
+            <div class="project-links">
+              <a href="#contacto" class="btn-link">Ver demo →</a>
+              <span class="btn-link-ghost">Python &amp; WinRT</span>
+            </div>
+            <div class="card-navigation">
+              <div class="dots-wrapper">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active-dot"></span>
+                <span class="dot"></span>
+              </div>
+              <div class="buttons">
+                <button onclick="previousCard()" class="previous-button" aria-label="Anterior">&#8592;</button>
+                <button onclick="nextCard()" class="next-button" aria-label="Siguiente">&#8594;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Crónicas Medievales -->
+        <div class="deck-card oculto-derecha" id="card-6" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
+          <div class="card-image" style="background-color: #e11d48;">
+            <div class="card-icon-wrapper icon-medieval">
+              <svg viewBox="0 0 120 120" class="svg-animated-icon" aria-hidden="true">
+                <!-- Rejilla hexagonal táctica de fondo -->
+                <g class="hex-grid" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.35">
+                  <polygon points="60,18 76,27 76,45 60,54 44,45 44,27" />
+                  <polygon points="36,46 52,55 52,73 36,82 20,73 20,55" />
+                  <polygon points="84,46 100,55 100,73 84,82 68,73 68,55" />
+                </g>
+                <!-- Escudo medieval de combate -->
+                <path d="M 60 32 C 78 32, 84 40, 84 62 C 84 78, 60 94, 60 94 C 60 94, 36 78, 36 62 C 36 40, 42 32, 60 32 Z" fill="#ffffff" class="medieval-shield" />
+                <!-- División heráldica del escudo -->
+                <path d="M 60 32 L 60 94" stroke="#e11d48" stroke-width="2" />
+                <path d="M 38 56 L 82 56" stroke="#e11d48" stroke-width="2" />
+                <!-- Cruz táctica central -->
+                <circle cx="60" cy="46" r="4" fill="#fbbf24" />
+                <!-- Espadas cruzadas animadas -->
+                <g class="crossed-swords">
+                  <!-- Espada 1 -->
+                  <g class="sword sword-1">
+                    <line x1="26" y1="26" x2="72" y2="72" stroke="#fbbf24" stroke-width="2.8" stroke-linecap="round" />
+                    <line x1="28" y1="36" x2="38" y2="26" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                    <circle cx="24" cy="24" r="2.5" fill="#ffffff" />
+                  </g>
+                  <!-- Espada 2 -->
+                  <g class="sword sword-2">
+                    <line x1="94" y1="26" x2="48" y2="72" stroke="#fbbf24" stroke-width="2.8" stroke-linecap="round" />
+                    <line x1="92" y1="36" x2="82" y2="26" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                    <circle cx="96" cy="24" r="2.5" fill="#ffffff" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="card-content">
+            <span class="project-tag">Juego Web</span>
+            <h3>Crónicas Medievales: Tácticas</h3>
+            <p>Videojuego táctico por turnos desarrollado con JavaScript puro y Canvas hexagonal, con inteligencia artificial de combate, niebla de guerra y gestión de tropas.</p>
+            <div class="project-links">
+              <a href="#contacto" class="btn-link">Ver demo →</a>
+              <span class="btn-link-ghost">JS &amp; Canvas</span>
+            </div>
+            <div class="card-navigation">
+              <div class="dots-wrapper">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active-dot"></span>
+              </div>
+              <div class="buttons">
+                <button onclick="previousCard()" class="previous-button" aria-label="Anterior">&#8592;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zonas transparentes para click lateral -->
+        <div id="div-transparent-previous" class="ocultar" onclick="previousCard()" aria-label="Tarjeta anterior"></div>
+        <div id="div-transparent-next" onclick="nextCard()" aria-label="Tarjeta siguiente"></div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — HABILIDADES -->
   <section class="section habilidades" id="habilidades">
     <div class="section-inner">
-      <div class="section-label">03 — Habilidades</div>
+      <div class="section-label">04 — Habilidades</div>
       <h2 class="section-title">Lo que <em>sé hacer</em></h2>
+      
       <div class="skills-grid">
 
         <div class="skill-group">
           <h4>Frontend</h4>
           <div class="skill-bars">
-            <div class="skill-bar"><span>HTML/CSS</span><div class="bar"><div class="fill" style="width:70%; --c:#F4A261"></div></div></div>
-            <div class="skill-bar"><span>JavaScript</span><div class="bar"><div class="fill" style="width:80%; --c:#F4A261"></div></div></div>
-            <div class="skill-bar"><span>React</span><div class="bar"><div class="fill" style="width:60%; --c:#F4A261"></div></div></div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>HTML / CSS</span><span class="skill-percent">85%</span></div>
+              <div class="bar"><div class="fill" data-width="85%" style="--c:#f97316"></div></div>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>JavaScript</span><span class="skill-percent">80%</span></div>
+              <div class="bar"><div class="fill" data-width="80%" style="--c:#f97316"></div></div>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>React</span><span class="skill-percent">65%</span></div>
+              <div class="bar"><div class="fill" data-width="65%" style="--c:#f97316"></div></div>
+            </div>
           </div>
         </div>
 
         <div class="skill-group">
           <h4>Backend</h4>
           <div class="skill-bars">
-            <div class="skill-bar"><span>Node.js</span><div class="bar"><div class="fill" style="width:50%; --c:#7EC8A4"></div></div></div>
-            <div class="skill-bar"><span>Python</span><div class="bar"><div class="fill" style="width:40%; --c:#7EC8A4"></div></div></div>
-            <div class="skill-bar"><span>SQL</span><div class="bar"><div class="fill" style="width:65%; --c:#7EC8A4"></div></div></div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>Node.js</span><span class="skill-percent">60%</span></div>
+              <div class="bar"><div class="fill" data-width="60%" style="--c:#2ec4b6"></div></div>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>Python</span><span class="skill-percent">55%</span></div>
+              <div class="bar"><div class="fill" data-width="55%" style="--c:#2ec4b6"></div></div>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>SQL</span><span class="skill-percent">70%</span></div>
+              <div class="bar"><div class="fill" data-width="70%" style="--c:#2ec4b6"></div></div>
+            </div>
           </div>
         </div>
 
         <div class="skill-group">
-          <h4>Diseño</h4>
+          <h4>Sistemas y TI</h4>
           <div class="skill-bars">
-            <div class="skill-bar"><span>css</span><div class="bar"><div class="fill" style="width:80%; --c:#6BBFD4"></div></div></div>
-            <div class="skill-bar"><span>Illustrator</span><div class="bar"><div class="fill" style="width:20%; --c:#6BBFD4"></div></div></div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>C++ / Algoritmos</span><span class="skill-percent">75%</span></div>
+              <div class="bar"><div class="fill" data-width="75%" style="--c:#0ea5e9"></div></div>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>Mantenimiento y Soporte</span><span class="skill-percent">85%</span></div>
+              <div class="bar"><div class="fill" data-width="85%" style="--c:#0ea5e9"></div></div>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-header"><span>Git / GitHub</span><span class="skill-percent">75%</span></div>
+              <div class="bar"><div class="fill" data-width="75%" style="--c:#0ea5e9"></div></div>
+            </div>
           </div>
         </div>
 
@@ -181,33 +544,41 @@
     </div>
   </section>
 
+  <!-- 05 — CONTACTO -->
   <section class="section contacto" id="contacto">
     <div class="section-inner contacto-inner">
-      <div class="section-label">04 — Contacto</div>
-      <h2 class="section-title">Hablemos <em>✦</em></h2>
+      <div class="section-label">05 — Contacto</div>
+      <h2 class="section-title">Hablemos</h2>
       <p class="contacto-sub">¿Tienes un proyecto en mente? Escríbeme y con gusto colaboramos.</p>
+      
       <form class="contact-form" onsubmit="handleSubmit(event)">
         <div class="form-row">
-          <input type="text" placeholder="Tu nombre" required/>
-          <input type="email" placeholder="Tu correo" required/>
+          <input type="text" id="contactName" placeholder="Tu nombre" required/>
+          <input type="email" id="contactEmail" placeholder="Tu correo" required/>
         </div>
-        <input type="text" placeholder="Asunto"/>
-        <textarea placeholder="Cuéntame sobre tu proyecto..." rows="5" required></textarea>
+        <input type="text" id="contactSubject" placeholder="Asunto" required/>
+        <textarea id="contactMessage" placeholder="Cuéntame sobre tu proyecto..." rows="5" required></textarea>
         <button type="submit" class="btn-submit">Enviar mensaje →</button>
       </form>
+      
       <div class="social-links">
-        <a href="#" class="social-pill">LinkedIn</a>
-        <a href="#" class="social-pill">GitHub</a>
-        <a href="https://x.com/PaoloDanze93395" class="social-pill">X</a>
-        <a href="mailto:danzellpaoloa1234@gmail.com" class="social-pill">Email</a>
+        <a href="https://github.com/danzellru2" target="_blank" rel="noopener noreferrer" class="social-pill">GitHub</a>
+        <a href="https://x.com/PaoloDanze93395" target="_blank" rel="noopener noreferrer" class="social-pill">X (Twitter)</a>
+        <a href="mailto:danzellpaolo1234@gmail.com" class="social-pill">Email</a>
+        <a href="CV/CV%20PAOLO.pdf" target="_blank" rel="noopener noreferrer" class="social-pill">Currículum</a>
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer">
-    <span class="nav-dot"></span>
-    <span>DANZELL PAOLO ARELLANO PADILLA · <em>Portafolio 2025</em></span>
-    <span>Hecho con ♥</span>
+    <div class="footer-left">
+      <span class="nav-dot"></span>
+      <span>DANZELL PAOLO ARELLANO PADILLA · <em>Portafolio 2026</em></span>
+    </div>
+    <div class="footer-right">
+      <span>Monterrey, Nuevo León, México</span>
+    </div>
   </footer>
 
   <script src="script.js"></script>
