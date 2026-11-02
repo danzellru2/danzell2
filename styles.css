@@ -1663,31 +1663,48 @@ section[id] {
   background: linear-gradient(90deg, transparent, #ff5c00, #00c9a7, transparent);
 }
 
-/* Avión de Papel Animado Volador */
+/* Avión de Papel Animado Volador de Alta Fidelidad (Origami 3D) */
 .paper-plane-flyer {
   position: absolute;
-  bottom: 80px;
-  left: 45px;
-  z-index: 80;
+  z-index: 85;
   pointer-events: none;
-  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.22));
+  transform-style: preserve-3d;
+  perspective: 800px;
   will-change: transform, opacity;
 }
 
 .plane-body-svg {
-  width: 62px;
-  height: 62px;
+  width: 76px;
+  height: 76px;
   display: block;
+  overflow: visible;
+  filter: drop-shadow(0 12px 20px rgba(13, 15, 18, 0.25));
 }
 
 .plane-wind-trail {
   position: absolute;
-  bottom: 0;
-  left: -80px;
-  width: 180px;
-  height: 120px;
+  bottom: -20px;
+  left: -120px;
+  width: 240px;
+  height: 150px;
   pointer-events: none;
-  opacity: 0.85;
+  overflow: visible;
+}
+
+.launch-thrust-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  margin-top: -24px;
+  margin-left: -24px;
+  border-radius: 50%;
+  border: 2px solid #00c9a7;
+  box-shadow: 0 0 16px rgba(0, 201, 167, 0.7);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.2);
 }
 
 /* Formulario */

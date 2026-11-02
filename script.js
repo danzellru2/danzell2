@@ -676,88 +676,132 @@ function animatePaperPlaneFlight(onComplete) {
   const formInner = document.querySelector('.form-inner');
   const submitBtn = document.getElementById('submitBtn');
   const btnIcon = submitBtn?.querySelector('.btn-plane-icon');
-  const flightTrail = document.getElementById('flightTrailPath');
+  const contactCard = document.getElementById('contactCard');
+  const trail1 = document.getElementById('flightTrailPath1');
+  const trail2 = document.getElementById('flightTrailPath2');
+  const trail3 = document.getElementById('flightTrailPath3');
+  const thrustRing = document.getElementById('launchThrustRing');
 
   if (!flyer || typeof anime === 'undefined') {
     if (onComplete) onComplete();
     return;
   }
 
-  // Mostrar el avión listo para despegue
+  // 1. Calcular origen exacto desde el botón de envío
+  if (submitBtn && contactCard) {
+    const cardRect = contactCard.getBoundingClientRect();
+    const btnRect = submitBtn.getBoundingClientRect();
+    const startX = (btnRect.left - cardRect.left) + (btnRect.width / 2) - 38;
+    const startY = (btnRect.top - cardRect.top) + (btnRect.height / 2) - 38;
+    flyer.style.left = startX + 'px';
+    flyer.style.top = startY + 'px';
+    flyer.style.bottom = 'auto';
+    flyer.style.right = 'auto';
+  }
+
+  // 2. Estado inicial del avión
   flyer.style.display = 'block';
   flyer.style.opacity = '1';
-  flyer.style.transform = 'translate(0px, 0px) scale(0.65) rotate(0deg)';
+  flyer.style.transformOrigin = 'center center';
+  flyer.style.transform = 'translate3d(0px, 0px, 0px) scale(0.65) rotate(0deg)';
 
-  // Desvanecer con empuje el icono dentro del botón
+  // Desvanecer el icono del botón con salto elástico
   if (btnIcon) {
     anime({
       targets: btnIcon,
-      translateX: [0, 8],
-      translateY: [0, -10],
+      scale: [1, 1.4, 0],
+      translateX: [0, 10],
+      translateY: [0, -12],
       opacity: [1, 0],
-      duration: 250,
-      easing: 'easeOutQuad'
+      duration: 300,
+      easing: 'easeOutBack'
     });
   }
 
-  // Preparar la estela de propulsión
-  if (flightTrail) {
-    flightTrail.style.strokeDashoffset = '320';
-    flightTrail.style.strokeDasharray = '320';
-  }
+  // Preparar estelas de propulsión
+  [trail1, trail2, trail3].forEach(tr => {
+    if (tr) {
+      tr.style.strokeDashoffset = '340';
+      tr.style.strokeDasharray = '340';
+      tr.style.opacity = '0';
+    }
+  });
 
   const flightTL = anime.timeline({
     easing: 'easeOutExpo'
   });
 
   flightTL
-    // 1. Tensión previa / Retroceso para coger impulso aerodinámico (wind-up)
+    // 1. Fase de Compresión / Impulso inicial (Wind-up elástico)
     .add({
       targets: flyer,
-      translateX: [0, -26],
-      translateY: [0, 18],
-      rotateZ: [0, 12],
+      translateX: [0, -32],
+      translateY: [0, 22],
+      rotateZ: [0, 14],
       scale: [0.65, 1.05],
-      duration: 380,
+      duration: 320,
       easing: 'easeOutQuad'
     })
-    // 2. Aceleración a chorro en ascenso con peralte dinámico 3D
+    // Anillo de choque sónico que se expande desde el origen
+    .add({
+      targets: thrustRing,
+      scale: [0.2, 2.4],
+      opacity: [0.9, 0],
+      duration: 500,
+      easing: 'easeOutExpo'
+    }, '-=240')
+    // 2. Despegue supersónico ascendente con elevación tridimensional
     .add({
       targets: flyer,
-      translateX: [-26, 130],
-      translateY: [18, -60],
-      rotateZ: [12, -26],
-      scale: [1.05, 1.35],
-      duration: 440,
+      translateX: [-32, 145],
+      translateY: [22, -85],
+      rotateZ: [14, -25],
+      scale: [1.05, 1.42],
+      duration: 480,
       easing: 'cubicBezier(0.4, 0, 0.2, 1)'
-    }, '-=60')
-    // Estela de viento y luz que sigue al avión
+    }, '-=100')
+    // Despliegue de estelas de viento dinámicas
     .add({
-      targets: flightTrail,
-      strokeDashoffset: [320, 0],
-      opacity: [0.2, 1, 0],
+      targets: [trail1, trail2, trail3],
+      strokeDashoffset: [340, 0],
+      opacity: [
+        { value: [0, 1], duration: 250 },
+        { value: [1, 0], duration: 450, delay: 100 }
+      ],
       duration: 720,
+      delay: anime.stagger(60),
       easing: 'easeOutSine'
-    }, '-=440')
-    // 3. Rizo acrobático supersónico saliendo de la tarjeta por la esquina superior derecha
+    }, '-=480')
+    // 3. Maniobra acrobática de planeo / alabeo (Barrel roll sutil)
     .add({
       targets: flyer,
-      translateX: [130, 440],
-      translateY: [-60, -340],
-      rotateZ: [-26, -52],
-      scale: [1.35, 0.4],
+      translateX: [145, 270],
+      translateY: [-85, -120],
+      rotateZ: [-25, -10, -28],
+      scale: [1.42, 1.3],
+      duration: 340,
+      easing: 'easeInOutQuad'
+    }, '-=80')
+    // 4. Escape hipersónico hacia el infinito por la esquina superior derecha
+    .add({
+      targets: flyer,
+      translateX: [270, 540],
+      translateY: [-120, -430],
+      rotateZ: [-28, -52],
+      scale: [1.3, 0.25],
       opacity: [1, 0],
-      duration: 620,
+      duration: 560,
       easing: 'cubicBezier(0.25, 0.1, 0.25, 1)'
-    }, '-=100');
+    }, '-=80');
 
-  // Desvanecer el formulario al unísono con el vuelo
+  // Desvanecer el formulario con transición suave coordinada
   anime({
     targets: formInner,
     opacity: [1, 0],
-    translateY: [0, -14],
-    duration: 400,
-    delay: 480,
+    translateY: [0, -16],
+    scale: [1, 0.98],
+    duration: 450,
+    delay: 550,
     easing: 'easeInCubic',
     complete: () => {
       flyer.style.display = 'none';
