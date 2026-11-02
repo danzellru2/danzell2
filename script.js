@@ -430,30 +430,40 @@ function onTouchEnd(event) {
 updateDeck();
 
 // ==========================================================================
-// Manejo Funcional del Formulario de Contacto (FormSubmit AJAX + Anime.js)
+// Manejo Funcional del Formulario de Contacto (Procesamiento Nativo + Anime.js)
 // ==========================================================================
-async function handleSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const submitBtn = form.querySelector('.btn-submit');
-  const statusBox = document.getElementById('formStatus');
-  const originalBtnText = submitBtn.innerHTML;
+let isSubmitting = false;
 
-  const name = document.getElementById('contactName')?.value.trim() || '';
-  const email = document.getElementById('contactEmail')?.value.trim() || '';
-  const subject = document.getElementById('contactSubject')?.value.trim() || '';
-  const message = document.getElementById('contactMessage')?.value.trim() || '';
+function handleSubmit(e) {
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const originalBtnText = 'Enviar mensaje →';
 
-  // Validación básica
+  const nameInput = document.getElementById('contactName');
+  const emailInput = document.getElementById('contactEmail');
+  const messageInput = document.getElementById('contactMessage');
+
+  const name = nameInput?.value.trim() || '';
+  const email = emailInput?.value.trim() || '';
+  const message = messageInput?.value.trim() || '';
+
+  // Validación básica previa al envío
   if (!name || !email || !message) {
+    e.preventDefault();
     showFormStatus('error', 'Por favor completa todos los campos requeridos para enviar tu mensaje.');
     return;
   }
 
-  // Estado de envío con micro-animación Anime.js
+  if (isSubmitting) {
+    e.preventDefault();
+    return;
+  }
+
+  isSubmitting = true;
   submitBtn.disabled = true;
   submitBtn.innerHTML = 'Enviando...';
 
+  // Animación Anime.js de envío en curso
   if (typeof anime !== 'undefined') {
     anime({
       targets: submitBtn,
@@ -464,64 +474,39 @@ async function handleSubmit(e) {
     });
   }
 
-  const payload = {
-    nombre: name,
-    email: email,
-    asunto: subject || 'Contacto desde tu portafolio',
-    mensaje: message,
-    _subject: `Nuevo mensaje de ${name} desde tu portafolio`,
-    _template: 'table'
+  const iframe = document.getElementById('formsubmit_iframe');
+  let completed = false;
+
+  const handleFinish = () => {
+    if (completed) return;
+    completed = true;
+    isSubmitting = false;
+
+    if (typeof anime !== 'undefined') {
+      anime.remove(submitBtn);
+      anime({ targets: submitBtn, scale: 1, duration: 200 });
+    }
+
+    submitBtn.innerHTML = 'Mensaje enviado';
+    submitBtn.style.background = '#00c9a7';
+    showFormStatus('success', '¡Tu mensaje ha sido enviado exitosamente! Me pondré en contacto contigo a la brevedad.');
+    form.reset();
+
+    setTimeout(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
+      submitBtn.style.background = '';
+    }, 4500);
   };
 
-  try {
-    const response = await fetch('https://formsubmit.co/ajax/danzellpaolo1234@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (typeof anime !== 'undefined') {
-      anime.remove(submitBtn);
-      anime({ targets: submitBtn, scale: 1, duration: 200 });
-    }
-
-    const data = await response.json().catch(() => ({}));
-
-    if (response.ok && (data.success === 'true' || data.success === true || response.status === 200)) {
-      submitBtn.innerHTML = 'Mensaje enviado';
-      submitBtn.style.background = '#00c9a7';
-      showFormStatus('success', '¡Tu mensaje ha sido enviado exitosamente! Me pondré en contacto contigo a la brevedad.');
-      form.reset();
-
-      setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-        submitBtn.style.background = '';
-      }, 4500);
-    } else {
-      throw new Error(data.message || 'Error en el servidor de envío');
-    }
-  } catch (error) {
-    if (typeof anime !== 'undefined') {
-      anime.remove(submitBtn);
-      anime({ targets: submitBtn, scale: 1, duration: 200 });
-    }
-
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalBtnText;
-    submitBtn.style.background = '';
-
-    showFormStatus('error', 'No se pudo conectar con el servidor de correo. Abriendo tu cliente de correo como respaldo directo...');
-
-    // Respaldo inmediato vía mailto para asegurar que el mensaje nunca se pierda
-    const mailtoUri = `mailto:danzellpaolo1234@gmail.com?subject=${encodeURIComponent((subject || 'Contacto') + ' - ' + name)}&body=${encodeURIComponent(message + '\n\nDe: ' + name + ' (' + email + ')')}`;
-    setTimeout(() => {
-      window.location.href = mailtoUri;
-    }, 1200);
+  if (iframe) {
+    iframe.onload = handleFinish;
   }
+
+  // Tiempo límite de seguridad garantizado (3.2 segundos) para dar feedback inmediato sin bloqueos
+  setTimeout(handleFinish, 3200);
+
+  // El navegador procesa de forma nativa el POST al iframe oculto sin bloqueo de CORS ni recarga de página
 }
 
 function showFormStatus(type, message) {

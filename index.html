@@ -554,18 +554,22 @@
       <h2 class="section-title">Hablemos</h2>
       <p class="contacto-sub">¿Tienes un proyecto en mente? Escríbeme y con gusto colaboramos.</p>
       
-      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
-        <!-- Configuración FormSubmit AJAX -->
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off"/>
+      <!-- Iframe invisible para procesamiento nativo en segundo plano (compatible con file:// y web) -->
+      <iframe name="formsubmit_iframe" id="formsubmit_iframe" style="display:none;" aria-hidden="true"></iframe>
+
+      <form class="contact-form" id="contactForm" action="https://formsubmit.co/danzellpaolo1234@gmail.com" method="POST" target="formsubmit_iframe" onsubmit="handleSubmit(event)">
+        <!-- Configuración FormSubmit -->
+        <input type="hidden" name="_captcha" value="false"/>
         <input type="hidden" name="_template" value="table"/>
         <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portafolio web"/>
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off"/>
 
         <div class="form-row">
-          <input type="text" id="contactName" name="nombre" placeholder="Tu nombre" required autocomplete="name"/>
+          <input type="text" id="contactName" name="name" placeholder="Tu nombre" required autocomplete="name"/>
           <input type="email" id="contactEmail" name="email" placeholder="Tu correo" required autocomplete="email"/>
         </div>
         <input type="text" id="contactSubject" name="asunto" placeholder="Asunto" required/>
-        <textarea id="contactMessage" name="mensaje" placeholder="Cuéntame sobre tu proyecto..." rows="5" required></textarea>
+        <textarea id="contactMessage" name="message" placeholder="Cuéntame sobre tu proyecto..." rows="5" required></textarea>
         
         <div class="form-actions">
           <button type="submit" class="btn-submit" id="submitBtn">Enviar mensaje →</button>
