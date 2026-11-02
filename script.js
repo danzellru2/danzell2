@@ -60,7 +60,7 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach(sec => observer.observe(sec));
 
 // ==========================================================================
-// Animaciones de Entrada con Anime.js
+// Inicialización y Animaciones de Entrada con Anime.js
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
   initHeroAnimations();
@@ -68,7 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initStatsCounter();
   initSkillBars();
   initMagneticButtons();
-  initFormInteractions();
+  initFloatingLabels();
+  initSubjectPills();
+
+  const btnReset = document.getElementById('btnResetForm');
+  if (btnReset) {
+    btnReset.addEventListener('click', resetFormState);
+  }
 });
 
 // Animación timeline del Hero al cargar
@@ -120,7 +126,7 @@ function initHeroAnimations() {
 // Animación de aparición suave escalonada en scroll con Anime.js
 function initScrollAnimations() {
   const fadeEls = document.querySelectorAll(
-    '.stat-card, .skill-group, .about-text, .about-stats, .modular-card, .deck-contenedor, .section-title, .section-label, .contact-form, .social-links'
+    '.stat-card, .skill-group, .about-text, .about-stats, .modular-card, .deck-contenedor, .contacto-info, .contact-card, .section-title, .section-label'
   );
 
   // Inicializar estado oculto de manera progresiva
@@ -248,27 +254,79 @@ function initMagneticButtons() {
   });
 }
 
-// Micro-interacción al enfocar los inputs del formulario
-function initFormInteractions() {
-  if (typeof anime === 'undefined') return;
+// ==========================================================================
+// Componente de Formulario Interactivo (Floating Labels & Subject Pills)
+// ==========================================================================
+function initFloatingLabels() {
+  const inputs = document.querySelectorAll('.fi-input');
+  inputs.forEach(input => {
+    const box = input.closest('.fi-box');
+    const label = box?.querySelector('.fi-label');
+    if (!box || !label) return;
 
-  document.querySelectorAll('.contact-form input, .contact-form textarea').forEach(input => {
+    if (input.value && input.value.trim().length > 0) {
+      label.classList.add('fi-up');
+    }
+
     input.addEventListener('focus', () => {
-      anime({
-        targets: input,
-        scale: [1, 1.01],
-        duration: 250,
-        easing: 'easeOutQuad'
-      });
+      box.classList.add('fi-focused');
+      label.classList.add('fi-up');
+      if (typeof anime !== 'undefined') {
+        anime({
+          targets: box,
+          scale: [1, 1.01],
+          duration: 200,
+          easing: 'easeOutSine'
+        });
+      }
     });
 
     input.addEventListener('blur', () => {
-      anime({
-        targets: input,
-        scale: 1,
-        duration: 250,
-        easing: 'easeOutQuad'
-      });
+      box.classList.remove('fi-focused');
+      if (!input.value || input.value.trim().length === 0) {
+        label.classList.remove('fi-up');
+      }
+      if (typeof anime !== 'undefined') {
+        anime({
+          targets: box,
+          scale: 1,
+          duration: 250,
+          easing: 'easeOutSine'
+        });
+      }
+    });
+
+    input.addEventListener('input', () => {
+      if (input.value.trim().length > 0) {
+        label.classList.add('fi-up');
+        box.classList.remove('fi-error');
+        const wrap = box.closest('.fi-wrap');
+        const errSpan = wrap?.querySelector('.fi-err');
+        if (errSpan) errSpan.style.display = 'none';
+      }
+    });
+  });
+}
+
+function initSubjectPills() {
+  const pills = document.querySelectorAll('.pill-row .pill');
+  const subjectInput = document.getElementById('selectedSubjectInput');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('pill-on'));
+      pill.classList.add('pill-on');
+      const chosen = pill.getAttribute('data-subject') || '';
+      if (subjectInput) {
+        subjectInput.value = chosen;
+      }
+      if (typeof anime !== 'undefined') {
+        anime({
+          targets: pill,
+          scale: [0.94, 1.06, 1],
+          duration: 320,
+          easing: 'easeOutBack'
+        });
+      }
     });
   });
 }
@@ -430,27 +488,51 @@ function onTouchEnd(event) {
 updateDeck();
 
 // ==========================================================================
-// Manejo Funcional del Formulario de Contacto (Procesamiento Nativo + Anime.js)
+// Animación Mejorada del Avión de Papel & Envío del Formulario
 // ==========================================================================
 let isSubmitting = false;
 
 function handleSubmit(e) {
-  const form = document.getElementById('contactForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const originalBtnText = 'Enviar mensaje →';
-
   const nameInput = document.getElementById('contactName');
   const emailInput = document.getElementById('contactEmail');
   const messageInput = document.getElementById('contactMessage');
+  const submitBtn = document.getElementById('submitBtn');
 
-  const name = nameInput?.value.trim() || '';
-  const email = emailInput?.value.trim() || '';
-  const message = messageInput?.value.trim() || '';
+  let hasErrors = false;
 
-  // Validación básica previa al envío
-  if (!name || !email || !message) {
+  function validateField(input, wrapId, errId, errorMsg) {
+    const wrap = document.getElementById(wrapId);
+    const box = wrap?.querySelector('.fi-box');
+    const err = document.getElementById(errId);
+
+    if (!input || !input.value.trim()) {
+      hasErrors = true;
+      if (box) box.classList.add('fi-error');
+      if (err) {
+        err.textContent = errorMsg;
+        err.style.display = 'block';
+      }
+      if (typeof anime !== 'undefined' && wrap) {
+        anime({
+          targets: wrap,
+          translateX: [0, -8, 8, -6, 6, -3, 3, 0],
+          duration: 450,
+          easing: 'easeInOutSine'
+        });
+      }
+    } else {
+      if (box) box.classList.remove('fi-error');
+      if (err) err.style.display = 'none';
+    }
+  }
+
+  // Validación de campos
+  validateField(nameInput, 'wrapName', 'errName', 'Escribe tu nombre');
+  validateField(emailInput, 'wrapEmail', 'errEmail', 'Escribe un correo válido');
+  validateField(messageInput, 'wrapMessage', 'errMessage', 'Escribe tu mensaje');
+
+  if (hasErrors) {
     e.preventDefault();
-    showFormStatus('error', 'Por favor completa todos los campos requeridos para enviar tu mensaje.');
     return;
   }
 
@@ -460,70 +542,245 @@ function handleSubmit(e) {
   }
 
   isSubmitting = true;
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = 'Enviando...';
-
-  // Animación Anime.js de envío en curso
-  if (typeof anime !== 'undefined') {
-    anime({
-      targets: submitBtn,
-      scale: [1, 0.96, 1],
-      duration: 650,
-      loop: true,
-      easing: 'easeInOutSine'
-    });
+  if (submitBtn) {
+    submitBtn.disabled = true;
   }
 
-  const iframe = document.getElementById('formsubmit_iframe');
-  let completed = false;
-
-  const handleFinish = () => {
-    if (completed) return;
-    completed = true;
+  // Ejecutar la animación aerodinámica mejorada del avión
+  animatePaperPlaneFlight(() => {
+    showSuccessScreen();
     isSubmitting = false;
+  });
 
-    if (typeof anime !== 'undefined') {
-      anime.remove(submitBtn);
-      anime({ targets: submitBtn, scale: 1, duration: 200 });
-    }
-
-    submitBtn.innerHTML = 'Mensaje enviado';
-    submitBtn.style.background = '#00c9a7';
-    showFormStatus('success', '¡Tu mensaje ha sido enviado exitosamente! Me pondré en contacto contigo a la brevedad.');
-    form.reset();
-
-    setTimeout(() => {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnText;
-      submitBtn.style.background = '';
-    }, 4500);
-  };
-
-  if (iframe) {
-    iframe.onload = handleFinish;
-  }
-
-  // Tiempo límite de seguridad garantizado (3.2 segundos) para dar feedback inmediato sin bloqueos
-  setTimeout(handleFinish, 3200);
-
-  // El navegador procesa de forma nativa el POST al iframe oculto sin bloqueo de CORS ni recarga de página
+  // NOTA: El navegador enviará nativamente los datos al iframe oculto
 }
 
-function showFormStatus(type, message) {
-  const statusBox = document.getElementById('formStatus');
-  if (!statusBox) return;
+// Animación Cinematográfica del Avión de Papel con Anime.js
+function animatePaperPlaneFlight(onComplete) {
+  const flyer = document.getElementById('paperPlaneFlyer');
+  const formInner = document.querySelector('.form-inner');
+  const submitBtn = document.getElementById('submitBtn');
+  const btnIcon = submitBtn?.querySelector('.btn-plane-icon');
+  const flightTrail = document.getElementById('flightTrailPath');
 
-  statusBox.className = `form-status ${type}`;
-  statusBox.textContent = message;
-  statusBox.style.display = 'block';
+  if (!flyer || typeof anime === 'undefined') {
+    if (onComplete) onComplete();
+    return;
+  }
+
+  // Mostrar el avión listo para despegue
+  flyer.style.display = 'block';
+  flyer.style.opacity = '1';
+  flyer.style.transform = 'translate(0px, 0px) scale(0.65) rotate(0deg)';
+
+  // Desvanecer con empuje el icono dentro del botón
+  if (btnIcon) {
+    anime({
+      targets: btnIcon,
+      translateX: [0, 8],
+      translateY: [0, -10],
+      opacity: [1, 0],
+      duration: 250,
+      easing: 'easeOutQuad'
+    });
+  }
+
+  // Preparar la estela de propulsión
+  if (flightTrail) {
+    flightTrail.style.strokeDashoffset = '320';
+    flightTrail.style.strokeDasharray = '320';
+  }
+
+  const flightTL = anime.timeline({
+    easing: 'easeOutExpo'
+  });
+
+  flightTL
+    // 1. Tensión previa / Retroceso para coger impulso aerodinámico (wind-up)
+    .add({
+      targets: flyer,
+      translateX: [0, -26],
+      translateY: [0, 18],
+      rotateZ: [0, 12],
+      scale: [0.65, 1.05],
+      duration: 380,
+      easing: 'easeOutQuad'
+    })
+    // 2. Aceleración a chorro en ascenso con peralte dinámico 3D
+    .add({
+      targets: flyer,
+      translateX: [-26, 130],
+      translateY: [18, -60],
+      rotateZ: [12, -26],
+      scale: [1.05, 1.35],
+      duration: 440,
+      easing: 'cubicBezier(0.4, 0, 0.2, 1)'
+    }, '-=60')
+    // Estela de viento y luz que sigue al avión
+    .add({
+      targets: flightTrail,
+      strokeDashoffset: [320, 0],
+      opacity: [0.2, 1, 0],
+      duration: 720,
+      easing: 'easeOutSine'
+    }, '-=440')
+    // 3. Rizo acrobático supersónico saliendo de la tarjeta por la esquina superior derecha
+    .add({
+      targets: flyer,
+      translateX: [130, 440],
+      translateY: [-60, -340],
+      rotateZ: [-26, -52],
+      scale: [1.35, 0.4],
+      opacity: [1, 0],
+      duration: 620,
+      easing: 'cubicBezier(0.25, 0.1, 0.25, 1)'
+    }, '-=100');
+
+  // Desvanecer el formulario al unísono con el vuelo
+  anime({
+    targets: formInner,
+    opacity: [1, 0],
+    translateY: [0, -14],
+    duration: 400,
+    delay: 480,
+    easing: 'easeInCubic',
+    complete: () => {
+      flyer.style.display = 'none';
+      if (onComplete) onComplete();
+    }
+  });
+}
+
+// Chispas de celebración orbitales (armónicas, sin arcoíris)
+function createSparks() {
+  const container = document.getElementById('scSparks');
+  if (!container) return;
+  container.innerHTML = '';
+  // Paleta nítida del portafolio: esmeralda, naranja cálido, azul cian, ámbar
+  const colors = ['#00c9a7', '#ff5c00', '#0284c7', '#ffb703', '#ffffff'];
+  for (let i = 0; i < 10; i++) {
+    const spark = document.createElement('div');
+    spark.className = 'sc-spark';
+    const size = (i % 2 === 0) ? 8 : 5;
+    spark.style.width = size + 'px';
+    spark.style.height = size + 'px';
+    spark.style.background = colors[i % colors.length];
+    spark.style.boxShadow = `0 0 8px ${colors[i % colors.length]}`;
+    container.appendChild(spark);
+  }
+}
+
+// Mostrar pantalla de éxito al aterrizar el mensaje
+function showSuccessScreen() {
+  const successWrap = document.getElementById('successWrap');
+  const formInner = document.querySelector('.form-inner');
+  if (!successWrap) return;
+
+  if (formInner) {
+    formInner.style.display = 'none';
+  }
+
+  createSparks();
+  successWrap.style.display = 'flex';
 
   if (typeof anime !== 'undefined') {
-    anime({
-      targets: statusBox,
-      opacity: [0, 1],
-      translateY: [12, 0],
-      duration: 400,
-      easing: 'easeOutCubic'
+    const successTL = anime.timeline({
+      easing: 'easeOutExpo'
     });
+
+    successTL
+      .add({
+        targets: successWrap,
+        opacity: [0, 1],
+        duration: 350
+      })
+      .add({
+        targets: '.sc-ring',
+        scale: [0, 1],
+        opacity: [0, 1],
+        duration: 750,
+        easing: 'easeOutBack(2)'
+      }, '-=150')
+      .add({
+        targets: '.sc-check',
+        strokeDashoffset: [anime.setDashoffset, 0],
+        duration: 600,
+        easing: 'easeOutCubic'
+      }, '-=350')
+      .add({
+        targets: '.sc-spark',
+        translateX: (el, i) => [0, 60 * Math.cos((i / 10) * Math.PI * 2)],
+        translateY: (el, i) => [0, 60 * Math.sin((i / 10) * Math.PI * 2)],
+        scale: [1.2, 0],
+        opacity: [1, 0],
+        duration: 800,
+        delay: anime.stagger(30),
+        easing: 'easeOutCubic'
+      }, '-=500')
+      .add({
+        targets: '.sc-plane-done',
+        opacity: [0, 1],
+        translateY: [20, 0],
+        scale: [0.75, 1],
+        duration: 500,
+        easing: 'easeOutBack'
+      }, '-=300')
+      .add({
+        targets: ['.sc-title', '.sc-sub', '.sc-reset'],
+        opacity: [0, 1],
+        translateY: [16, 0],
+        delay: anime.stagger(80),
+        duration: 500
+      }, '-=300');
+  } else {
+    successWrap.style.opacity = '1';
+  }
+}
+
+// Reiniciar formulario para enviar otro mensaje
+function resetFormState() {
+  const successWrap = document.getElementById('successWrap');
+  const formInner = document.querySelector('.form-inner');
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const btnIcon = submitBtn?.querySelector('.btn-plane-icon');
+
+  if (typeof anime !== 'undefined' && successWrap) {
+    anime({
+      targets: successWrap,
+      opacity: [1, 0],
+      translateY: [0, 15],
+      duration: 300,
+      easing: 'easeInCubic',
+      complete: () => {
+        successWrap.style.display = 'none';
+        if (form) form.reset();
+        document.querySelectorAll('.fi-label').forEach(lbl => lbl.classList.remove('fi-up'));
+        if (btnIcon) {
+          btnIcon.style.opacity = '1';
+          btnIcon.style.transform = '';
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+        }
+        if (formInner) {
+          formInner.style.display = 'flex';
+          anime({
+            targets: formInner,
+            opacity: [0, 1],
+            translateY: [-12, 0],
+            duration: 400,
+            easing: 'easeOutCubic'
+          });
+        }
+      }
+    });
+  } else {
+    if (successWrap) successWrap.style.display = 'none';
+    if (form) form.reset();
+    if (formInner) {
+      formInner.style.display = 'flex';
+      formInner.style.opacity = '1';
+    }
   }
 }
