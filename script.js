@@ -674,14 +674,23 @@ function createSparks() {
 function showSuccessScreen() {
   const successWrap = document.getElementById('successWrap');
   const formInner = document.querySelector('.form-inner');
+  const contactCard = document.getElementById('contactCard');
   if (!successWrap) return;
 
+  // Garantizar que la tarjeta conserve su altura estructural
+  if (contactCard) {
+    contactCard.style.minHeight = '560px';
+  }
+
+  // Ocultar formulario manteniendo el espacio estructural de la tarjeta
   if (formInner) {
-    formInner.style.display = 'none';
+    formInner.style.visibility = 'hidden';
+    formInner.style.pointerEvents = 'none';
   }
 
   createSparks();
   successWrap.style.display = 'flex';
+  successWrap.style.opacity = '1';
 
   if (typeof anime !== 'undefined') {
     const successTL = anime.timeline({
@@ -749,13 +758,13 @@ function resetFormState() {
     anime({
       targets: successWrap,
       opacity: [1, 0],
-      translateY: [0, 15],
-      duration: 300,
-      easing: 'easeInCubic',
+      duration: 280,
+      easing: 'easeInQuad',
       complete: () => {
         successWrap.style.display = 'none';
         if (form) form.reset();
         document.querySelectorAll('.fi-label').forEach(lbl => lbl.classList.remove('fi-up'));
+        document.querySelectorAll('.fi-box').forEach(b => b.classList.remove('fi-focused', 'fi-error'));
         if (btnIcon) {
           btnIcon.style.opacity = '1';
           btnIcon.style.transform = '';
@@ -764,12 +773,13 @@ function resetFormState() {
           submitBtn.disabled = false;
         }
         if (formInner) {
-          formInner.style.display = 'flex';
+          formInner.style.visibility = 'visible';
+          formInner.style.pointerEvents = 'auto';
           anime({
             targets: formInner,
             opacity: [0, 1],
-            translateY: [-12, 0],
-            duration: 400,
+            translateY: [-10, 0],
+            duration: 350,
             easing: 'easeOutCubic'
           });
         }
@@ -779,8 +789,10 @@ function resetFormState() {
     if (successWrap) successWrap.style.display = 'none';
     if (form) form.reset();
     if (formInner) {
-      formInner.style.display = 'flex';
+      formInner.style.visibility = 'visible';
+      formInner.style.pointerEvents = 'auto';
       formInner.style.opacity = '1';
     }
+    if (submitBtn) submitBtn.disabled = false;
   }
 }
