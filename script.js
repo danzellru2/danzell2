@@ -12,14 +12,86 @@ if (navToggle && navLinks) {
   });
 
   document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => navLinks.classList.remove('open'));
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        setActiveSection(href.substring(1));
+      }
+    });
   });
 }
+
+// Botones circulares del Hero (sincronizan también la sección activa al hacer clic)
+document.querySelectorAll('.hero-nav-circles .circle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const href = btn.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      setActiveSection(href.substring(1));
+    }
+  });
+});
 
 // Barra de progreso de lectura y sombra dinámica en la navbar
 const navbar = document.querySelector('.navbar');
 const scrollProgressBar = document.getElementById('scrollProgressBar');
 
+// ==========================================================================
+// ScrollSpy Preciso y Determinista
+// ==========================================================================
+const sections = Array.from(document.querySelectorAll('section[id]'));
+const allNavLinks = Array.from(document.querySelectorAll('.nav-link'));
+
+function setActiveSection(id) {
+  if (!id) return;
+  allNavLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === '#' + id) {
+      link.classList.add('active');
+    } else if (href && href.startsWith('#')) {
+      link.classList.remove('active');
+    }
+  });
+}
+
+function updateActiveNavLink() {
+  if (!sections.length) return;
+
+  const scrollY = window.scrollY || window.pageYOffset;
+  const windowHeight = window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
+
+  // 1. Caso extremo: Final de la página alcanzado -> activar 'contacto' sin ambigüedad
+  if (scrollY + windowHeight >= docHeight - 60) {
+    setActiveSection('contacto');
+    return;
+  }
+
+  // 2. Caso extremo: Inicio de la página -> activar 'inicio'
+  if (scrollY < 120) {
+    setActiveSection('inicio');
+    return;
+  }
+
+  // 3. Determinar qué sección cruza el checkpoint de lectura (180px, debajo de la navbar fija)
+  const checkpoint = 180;
+  let activeId = 'inicio';
+
+  for (let i = 0; i < sections.length; i++) {
+    const sec = sections[i];
+    const rect = sec.getBoundingClientRect();
+    if (rect.top <= checkpoint) {
+      activeId = sec.id;
+    }
+  }
+
+  if (activeId) {
+    setActiveSection(activeId);
+  }
+}
+
+// Evento de scroll con requestAnimationFrame para máximo rendimiento
+let isScrolling = false;
 window.addEventListener('scroll', () => {
   const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -38,31 +110,28 @@ window.addEventListener('scroll', () => {
       navbar.style.background = 'rgba(251, 250, 247, 0.88)';
     }
   }
+
+  if (!isScrolling) {
+    window.requestAnimationFrame(() => {
+      updateActiveNavLink();
+      isScrolling = false;
+    });
+    isScrolling = true;
+  }
+}, { passive: true });
+
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#')) {
+    setActiveSection(hash.substring(1));
+  }
 });
-
-// Navegación activa con scroll
-const sections = document.querySelectorAll('section[id]');
-const allNavLinks = document.querySelectorAll('.nav-link');
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      allNavLinks.forEach(link => {
-        link.classList.toggle(
-          'active',
-          link.getAttribute('href') === '#' + entry.target.id
-        );
-      });
-    }
-  });
-}, { threshold: 0.35 });
-
-sections.forEach(sec => observer.observe(sec));
 
 // ==========================================================================
 // Inicialización y Animaciones de Entrada con Anime.js
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
+  updateActiveNavLink();
   initHeroAnimations();
   initScrollAnimations();
   initStatsCounter();

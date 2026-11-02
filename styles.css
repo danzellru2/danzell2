@@ -437,6 +437,14 @@ img {
    SECCIONES BASE
    ========================================================================== */
 
+section[id] {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+#inicio {
+  scroll-margin-top: 0px;
+}
+
 .section {
   padding: 105px 64px;
   position: relative;
