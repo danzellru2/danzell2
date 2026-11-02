@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
   
-  <link rel="stylesheet" href="styles.css?v=2.5"/>
+  <link rel="stylesheet" href="styles.css?v=3.0"/>
 </head>
 <body>
 
@@ -636,15 +636,15 @@
               </svg>
             </div>
 
-            <!-- Iframe invisible para envío nativo en segundo plano sin recargar la página -->
-            <iframe name="formsubmit_iframe" id="formsubmit_iframe" style="display:none;" aria-hidden="true"></iframe>
+            <!-- Iframe invisible para envío nativo de respaldo sin recargar la página -->
+            <iframe name="web3forms_iframe" id="web3forms_iframe" style="position:absolute;width:0;height:0;border:0;opacity:0;pointer-events:none;" tabindex="-1" aria-hidden="true"></iframe>
 
-            <!-- Formulario interactivo -->
-            <form class="form-inner" id="contactForm" action="https://formsubmit.co/danzellpaolo1234@gmail.com" method="POST" target="formsubmit_iframe" onsubmit="handleSubmit(event)">
-              <input type="hidden" name="_captcha" value="false"/>
-              <input type="hidden" name="_template" value="table"/>
-              <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portafolio web"/>
-              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off"/>
+            <!-- Formulario interactivo con Web3Forms -->
+            <form class="form-inner" id="contactForm" action="https://api.web3forms.com/submit" method="POST" target="web3forms_iframe" onsubmit="handleSubmit(event)">
+              <input type="hidden" name="access_key" value="d876e08d-0e1b-4bad-b8c1-47e2b27bf26d"/>
+              <input type="hidden" name="subject" value="Nuevo mensaje desde tu portafolio web"/>
+              <input type="hidden" name="from_name" value="Portafolio Danzell"/>
+              <input type="checkbox" name="botcheck" style="display:none;"/>
               <input type="hidden" name="asunto" id="selectedSubjectInput" value="Web App / Sistema"/>
 
               <div class="form-head">
@@ -729,15 +729,11 @@
                 <div class="plane-trail-line"></div>
               </div>
 
-              <h3 class="sc-title">¡Mensaje enviado!</h3>
+              <h3 class="sc-title">¡Mensaje enviado con éxito!</h3>
               <p class="sc-sub">
                 Tu avión de papel llegó a su destino.<br>
-                Te responderé en menos de 24 horas.
+                Te responderé en menos de 24 horas a tu correo.
               </p>
-
-              <div class="sc-hint">
-                ¿Primera vez enviando? Revisa tu correo <strong>danzellpaolo1234@gmail.com</strong> (incluyendo <strong>Spam</strong>) y haz clic en <em>"Activate Form"</em> de FormSubmit.
-              </div>
 
               <button type="button" class="sc-reset" id="btnResetForm">
                 Enviar otro mensaje
@@ -764,6 +760,6 @@
 
   <!-- Librería Anime.js para animaciones fluidas y reactivas -->
   <script src="anime.min.js"></script>
-  <script src="script.js?v=2.5"></script>
+  <script src="script.js?v=3.0"></script>
 </body>
 </html>

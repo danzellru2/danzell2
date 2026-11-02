@@ -557,11 +557,14 @@ function onTouchEnd(event) {
 updateDeck();
 
 // ==========================================================================
-// Animación Mejorada del Avión de Papel & Envío del Formulario
+// Animación Mejorada del Avión de Papel & Envío del Formulario (Web3Forms)
 // ==========================================================================
 let isSubmitting = false;
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
+  e.preventDefault();
+
+  const form = document.getElementById('contactForm');
   const nameInput = document.getElementById('contactName');
   const emailInput = document.getElementById('contactEmail');
   const messageInput = document.getElementById('contactMessage');
@@ -600,31 +603,71 @@ function handleSubmit(e) {
   validateField(emailInput, 'wrapEmail', 'errEmail', 'Escribe un correo válido');
   validateField(messageInput, 'wrapMessage', 'errMessage', 'Escribe tu mensaje');
 
-  if (hasErrors) {
-    e.preventDefault();
-    return;
-  }
-
-  if (isSubmitting) {
-    e.preventDefault();
+  if (hasErrors || isSubmitting) {
     return;
   }
 
   isSubmitting = true;
   if (submitBtn) {
     submitBtn.style.pointerEvents = 'none';
-    setTimeout(() => {
-      if (submitBtn) submitBtn.disabled = true;
-    }, 120);
+    submitBtn.disabled = true;
   }
 
-  // Ejecutar la animación aerodinámica mejorada del avión
+  const formData = new FormData(form);
+
+  let animationFinished = false;
+  let submissionFinished = false;
+  let isSuccessful = false;
+
+  function finalize() {
+    if (animationFinished && submissionFinished) {
+      if (isSuccessful) {
+        showSuccessScreen();
+      } else {
+        alert('Hubo un inconveniente al enviar por la red. Se abrirá tu cliente de correo como respaldo directo.');
+        const subject = encodeURIComponent(document.getElementById('selectedSubjectInput')?.value || 'Contacto');
+        const body = encodeURIComponent(`Nombre: ${nameInput.value}\nCorreo: ${emailInput.value}\n\n${messageInput.value}`);
+        window.location.href = `mailto:danzellpaolo1234@gmail.com?subject=${subject}&body=${body}`;
+        resetFormState();
+      }
+      isSubmitting = false;
+    }
+  }
+
+  // Iniciar la animación cinematográfica del avión de papel
   animatePaperPlaneFlight(() => {
-    showSuccessScreen();
-    isSubmitting = false;
+    animationFinished = true;
+    finalize();
   });
 
-  // NOTA: El navegador enviará nativamente los datos al iframe oculto
+  // Envío asíncrono directo a Web3Forms
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    if (res.ok && data.success) {
+      isSuccessful = true;
+    } else {
+      if (form) {
+        form.target = 'web3forms_iframe';
+        form.submit();
+        isSuccessful = true;
+      }
+    }
+  } catch (err) {
+    console.warn('Fallback a envío nativo:', err);
+    if (form) {
+      form.target = 'web3forms_iframe';
+      form.submit();
+      isSuccessful = true;
+    }
+  } finally {
+    submissionFinished = true;
+    finalize();
+  }
 }
 
 // Animación Cinematográfica del Avión de Papel con Anime.js
