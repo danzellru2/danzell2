@@ -1634,6 +1634,7 @@ section[id] {
 .contacto-card-wrap {
   position: relative;
   width: 100%;
+  overflow: visible;
 }
 
 .contact-card {
@@ -1666,11 +1667,12 @@ section[id] {
 /* Avión de Papel Animado Volador de Alta Fidelidad (Origami 3D) */
 .paper-plane-flyer {
   position: absolute;
-  z-index: 85;
+  z-index: 1000;
   pointer-events: none;
   transform-style: preserve-3d;
-  perspective: 800px;
+  perspective: 1000px;
   will-change: transform, opacity;
+  overflow: visible;
 }
 
 .plane-body-svg {

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
   
-  <link rel="stylesheet" href="styles.css?v=3.1"/>
+  <link rel="stylesheet" href="styles.css?v=3.2"/>
 </head>
 <body>
 
@@ -605,82 +605,82 @@
 
         <!-- Columna Derecha: Tarjeta con Formulario Interactivo y Avión Volador -->
         <div class="contacto-card-wrap">
+          <!-- Avión de papel animado volador de alta fidelidad (origami 3D) fuera de overflow:hidden para vuelo libre sin límites -->
+          <div class="paper-plane-flyer" id="paperPlaneFlyer" style="display:none;" aria-hidden="true">
+            <!-- Anillo de propulsión inicial -->
+            <div class="launch-thrust-ring" id="launchThrustRing"></div>
+
+            <!-- Estelas de viento aerodinámicas (3 filamentos luminosos) -->
+            <svg class="plane-wind-trail" viewBox="0 0 280 180" fill="none">
+              <defs>
+                <linearGradient id="trailGrad1" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#ff5c00" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#00c9a7" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#0284c7" stop-opacity="1"/>
+                </linearGradient>
+                <linearGradient id="trailGrad2" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#ff5c00" stop-opacity="0"/>
+                  <stop offset="60%" stop-color="#ffb703" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#00c9a7" stop-opacity="0.9"/>
+                </linearGradient>
+              </defs>
+              <!-- Estela principal central -->
+              <path id="flightTrailPath1" d="M 15 160 Q 90 155 125 95 T 255 20" stroke="url(#trailGrad1)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 6"/>
+              <!-- Vórtice ala izquierda -->
+              <path id="flightTrailPath2" d="M 25 170 Q 95 160 135 105 T 265 32" stroke="url(#trailGrad2)" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="4 4" opacity="0.75"/>
+              <!-- Vórtice ala derecha -->
+              <path id="flightTrailPath3" d="M 5 150 Q 85 145 115 85 T 245 12" stroke="url(#trailGrad1)" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 4" opacity="0.6"/>
+            </svg>
+
+            <!-- Avión de papel Origami 3D de alta definición -->
+            <svg class="plane-body-svg" viewBox="0 0 100 100" fill="none">
+              <defs>
+                <!-- Sombra dinámica de elevación -->
+                <filter id="planeDeepShadow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="3" dy="12" stdDeviation="6" flood-color="rgba(13, 15, 18, 0.32)"/>
+                </filter>
+                <!-- Gradientes realistas de textura de papel -->
+                <linearGradient id="wingLeftGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#edf2f7"/>
+                </linearGradient>
+                <linearGradient id="wingRightGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#e2e8f0"/>
+                  <stop offset="100%" stop-color="#cbd5e1"/>
+                </linearGradient>
+                <linearGradient id="bodyUnderGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f8fafc"/>
+                  <stop offset="100%" stop-color="#e2e8f0"/>
+                </linearGradient>
+                <linearGradient id="spineGrad" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#ff5c00"/>
+                  <stop offset="100%" stop-color="#ff8c00"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Avión facetado en origami -->
+              <g filter="url(#planeDeepShadow)">
+                <!-- Ala inferior derecha en penumbra -->
+                <polygon points="90,14 42,74 52,90" fill="url(#wingRightGrad)"/>
+                <!-- Quilla del fuselaje en sombra -->
+                <polygon points="90,14 34,58 42,74" fill="#94a3b8"/>
+                <!-- Ala izquierda principal orientada a la luz -->
+                <polygon points="90,14 10,48 34,58" fill="url(#wingLeftGrad)"/>
+                <!-- Pliegue interior superior -->
+                <polygon points="90,14 34,58 60,34" fill="url(#bodyUnderGrad)"/>
+
+                <!-- Pliegue central del lomo / quilla en naranja -->
+                <line x1="34" y1="58" x2="90" y2="14" stroke="url(#spineGrad)" stroke-width="2.6" stroke-linecap="round"/>
+                <!-- Línea aerodinámica de borde de ataque esmeralda -->
+                <line x1="10" y1="48" x2="26" y2="51" stroke="#00c9a7" stroke-width="2.6" stroke-linecap="round"/>
+                <!-- Acento en punta derecha azul cian -->
+                <line x1="52" y1="90" x2="48" y2="80" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+            </svg>
+          </div>
+
           <div class="contact-card" id="contactCard">
             <div class="card-topline"></div>
-
-            <!-- Avión de papel animado volador de alta fidelidad (origami 3D) -->
-            <div class="paper-plane-flyer" id="paperPlaneFlyer" style="display:none;" aria-hidden="true">
-              <!-- Anillo de propulsión inicial -->
-              <div class="launch-thrust-ring" id="launchThrustRing"></div>
-
-              <!-- Estelas de viento aerodinámicas (3 filamentos luminosos) -->
-              <svg class="plane-wind-trail" viewBox="0 0 280 180" fill="none">
-                <defs>
-                  <linearGradient id="trailGrad1" x1="0" y1="1" x2="1" y2="0">
-                    <stop offset="0%" stop-color="#ff5c00" stop-opacity="0"/>
-                    <stop offset="50%" stop-color="#00c9a7" stop-opacity="0.8"/>
-                    <stop offset="100%" stop-color="#0284c7" stop-opacity="1"/>
-                  </linearGradient>
-                  <linearGradient id="trailGrad2" x1="0" y1="1" x2="1" y2="0">
-                    <stop offset="0%" stop-color="#ff5c00" stop-opacity="0"/>
-                    <stop offset="60%" stop-color="#ffb703" stop-opacity="0.7"/>
-                    <stop offset="100%" stop-color="#00c9a7" stop-opacity="0.9"/>
-                  </linearGradient>
-                </defs>
-                <!-- Estela principal central -->
-                <path id="flightTrailPath1" d="M 15 160 Q 90 155 125 95 T 255 20" stroke="url(#trailGrad1)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 6"/>
-                <!-- Vórtice ala izquierda -->
-                <path id="flightTrailPath2" d="M 25 170 Q 95 160 135 105 T 265 32" stroke="url(#trailGrad2)" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="4 4" opacity="0.75"/>
-                <!-- Vórtice ala derecha -->
-                <path id="flightTrailPath3" d="M 5 150 Q 85 145 115 85 T 245 12" stroke="url(#trailGrad1)" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 4" opacity="0.6"/>
-              </svg>
-
-              <!-- Avión de papel Origami 3D de alta definición -->
-              <svg class="plane-body-svg" viewBox="0 0 100 100" fill="none">
-                <defs>
-                  <!-- Sombra dinámica de elevación -->
-                  <filter id="planeDeepShadow" x="-40%" y="-40%" width="180%" height="180%">
-                    <feDropShadow dx="3" dy="12" stdDeviation="6" flood-color="rgba(13, 15, 18, 0.32)"/>
-                  </filter>
-                  <!-- Gradientes realistas de textura de papel -->
-                  <linearGradient id="wingLeftGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#ffffff"/>
-                    <stop offset="100%" stop-color="#edf2f7"/>
-                  </linearGradient>
-                  <linearGradient id="wingRightGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#e2e8f0"/>
-                    <stop offset="100%" stop-color="#cbd5e1"/>
-                  </linearGradient>
-                  <linearGradient id="bodyUnderGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#f8fafc"/>
-                    <stop offset="100%" stop-color="#e2e8f0"/>
-                  </linearGradient>
-                  <linearGradient id="spineGrad" x1="0" y1="1" x2="1" y2="0">
-                    <stop offset="0%" stop-color="#ff5c00"/>
-                    <stop offset="100%" stop-color="#ff8c00"/>
-                  </linearGradient>
-                </defs>
-
-                <!-- Avión facetado en origami -->
-                <g filter="url(#planeDeepShadow)">
-                  <!-- Ala inferior derecha en penumbra -->
-                  <polygon points="90,14 42,74 52,90" fill="url(#wingRightGrad)"/>
-                  <!-- Quilla del fuselaje en sombra -->
-                  <polygon points="90,14 34,58 42,74" fill="#94a3b8"/>
-                  <!-- Ala izquierda principal orientada a la luz -->
-                  <polygon points="90,14 10,48 34,58" fill="url(#wingLeftGrad)"/>
-                  <!-- Pliegue interior superior -->
-                  <polygon points="90,14 34,58 60,34" fill="url(#bodyUnderGrad)"/>
-
-                  <!-- Pliegue central del lomo / quilla en naranja -->
-                  <line x1="34" y1="58" x2="90" y2="14" stroke="url(#spineGrad)" stroke-width="2.6" stroke-linecap="round"/>
-                  <!-- Línea aerodinámica de borde de ataque esmeralda -->
-                  <line x1="10" y1="48" x2="26" y2="51" stroke="#00c9a7" stroke-width="2.6" stroke-linecap="round"/>
-                  <!-- Acento en punta derecha azul cian -->
-                  <line x1="52" y1="90" x2="48" y2="80" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>
-                </g>
-              </svg>
-            </div>
 
             <!-- Iframe invisible para envío nativo de respaldo sin recargar la página -->
             <iframe name="web3forms_iframe" id="web3forms_iframe" style="position:absolute;width:0;height:0;border:0;opacity:0;pointer-events:none;" tabindex="-1" aria-hidden="true"></iframe>
@@ -806,6 +806,6 @@
 
   <!-- Librería Anime.js para animaciones fluidas y reactivas -->
   <script src="anime.min.js"></script>
-  <script src="script.js?v=3.1"></script>
+  <script src="script.js?v=3.2"></script>
 </body>
 </html>

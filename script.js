@@ -676,7 +676,7 @@ function animatePaperPlaneFlight(onComplete) {
   const formInner = document.querySelector('.form-inner');
   const submitBtn = document.getElementById('submitBtn');
   const btnIcon = submitBtn?.querySelector('.btn-plane-icon');
-  const contactCard = document.getElementById('contactCard');
+  const cardWrap = document.querySelector('.contacto-card-wrap');
   const trail1 = document.getElementById('flightTrailPath1');
   const trail2 = document.getElementById('flightTrailPath2');
   const trail3 = document.getElementById('flightTrailPath3');
@@ -687,12 +687,12 @@ function animatePaperPlaneFlight(onComplete) {
     return;
   }
 
-  // 1. Calcular origen exacto desde el botón de envío
-  if (submitBtn && contactCard) {
-    const cardRect = contactCard.getBoundingClientRect();
+  // 1. Calcular origen exacto desde el botón de envío relativo a .contacto-card-wrap
+  if (submitBtn && cardWrap) {
+    const wrapRect = cardWrap.getBoundingClientRect();
     const btnRect = submitBtn.getBoundingClientRect();
-    const startX = (btnRect.left - cardRect.left) + (btnRect.width / 2) - 38;
-    const startY = (btnRect.top - cardRect.top) + (btnRect.height / 2) - 38;
+    const startX = (btnRect.left - wrapRect.left) + (btnRect.width / 2) - 38;
+    const startY = (btnRect.top - wrapRect.top) + (btnRect.height / 2) - 38;
     flyer.style.left = startX + 'px';
     flyer.style.top = startY + 'px';
     flyer.style.bottom = 'auto';
@@ -728,36 +728,40 @@ function animatePaperPlaneFlight(onComplete) {
   });
 
   const flightTL = anime.timeline({
-    easing: 'easeOutExpo'
+    easing: 'easeOutExpo',
+    complete: () => {
+      flyer.style.display = 'none';
+      if (onComplete) onComplete();
+    }
   });
 
   flightTL
     // 1. Fase de Compresión / Impulso inicial (Wind-up elástico)
     .add({
       targets: flyer,
-      translateX: [0, -32],
-      translateY: [0, 22],
-      rotateZ: [0, 14],
+      translateX: [0, -35],
+      translateY: [0, 18],
+      rotateZ: [0, 15],
       scale: [0.65, 1.05],
-      duration: 320,
+      duration: 340,
       easing: 'easeOutQuad'
     })
     // Anillo de choque sónico que se expande desde el origen
     .add({
       targets: thrustRing,
-      scale: [0.2, 2.4],
-      opacity: [0.9, 0],
-      duration: 500,
+      scale: [0.2, 2.5],
+      opacity: [0.95, 0],
+      duration: 520,
       easing: 'easeOutExpo'
-    }, '-=240')
-    // 2. Despegue supersónico ascendente con elevación tridimensional
+    }, '-=260')
+    // 2. Despegue supersónico ascendente: trepada ágil hacia el cuadrante superior
     .add({
       targets: flyer,
-      translateX: [-32, 145],
-      translateY: [22, -85],
-      rotateZ: [14, -25],
-      scale: [1.05, 1.42],
-      duration: 480,
+      translateX: [-35, 120],
+      translateY: [18, -170],
+      rotateZ: [15, -28],
+      scale: [1.05, 1.45],
+      duration: 540,
       easing: 'cubicBezier(0.4, 0, 0.2, 1)'
     }, '-=100')
     // Despliegue de estelas de viento dinámicas
@@ -771,42 +775,38 @@ function animatePaperPlaneFlight(onComplete) {
       duration: 720,
       delay: anime.stagger(60),
       easing: 'easeOutSine'
-    }, '-=480')
-    // 3. Maniobra acrobática de planeo / alabeo (Barrel roll sutil)
+    }, '-=540')
+    // 3. Maniobra acrobática de planeo / alabeo (loop suave ganando altitud)
     .add({
       targets: flyer,
-      translateX: [145, 270],
-      translateY: [-85, -120],
-      rotateZ: [-25, -10, -28],
-      scale: [1.42, 1.3],
-      duration: 340,
+      translateX: [120, 290],
+      translateY: [-170, -280],
+      rotateZ: [-28, -10, -30],
+      scale: [1.45, 1.35],
+      duration: 420,
       easing: 'easeInOutQuad'
     }, '-=80')
     // 4. Escape hipersónico hacia el infinito por la esquina superior derecha
     .add({
       targets: flyer,
-      translateX: [270, 540],
-      translateY: [-120, -430],
-      rotateZ: [-28, -52],
-      scale: [1.3, 0.25],
+      translateX: [290, 780],
+      translateY: [-280, -680],
+      rotateZ: [-30, -55],
+      scale: [1.35, 0.2],
       opacity: [1, 0],
-      duration: 560,
+      duration: 640,
       easing: 'cubicBezier(0.25, 0.1, 0.25, 1)'
-    }, '-=80');
+    }, '-=60');
 
-  // Desvanecer el formulario con transición suave coordinada
+  // Desvanecer el formulario con transición suave coordinada en paralelo
   anime({
     targets: formInner,
     opacity: [1, 0],
-    translateY: [0, -16],
+    translateY: [0, -18],
     scale: [1, 0.98],
-    duration: 450,
-    delay: 550,
-    easing: 'easeInCubic',
-    complete: () => {
-      flyer.style.display = 'none';
-      if (onComplete) onComplete();
-    }
+    duration: 480,
+    delay: 650,
+    easing: 'easeInCubic'
   });
 }
 
