@@ -14,6 +14,9 @@
 </head>
 <body>
 
+  <!-- Barra de progreso de lectura / scroll -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
   <!-- NAVBAR -->
   <nav class="navbar">
     <a href="#inicio" class="nav-brand">
@@ -99,15 +102,15 @@
         
         <div class="about-stats">
           <div class="stat-card">
-            <span class="stat-num">+5</span>
+            <span class="stat-num" data-target="5" data-prefix="+">+5</span>
             <span class="stat-label">Proyectos completados</span>
           </div>
           <div class="stat-card">
-            <span class="stat-num">3</span>
+            <span class="stat-num" data-target="3" data-prefix="">3</span>
             <span class="stat-label">Años de experiencia</span>
           </div>
           <div class="stat-card">
-            <span class="stat-num">+3</span>
+            <span class="stat-num" data-target="3" data-prefix="+">+3</span>
             <span class="stat-label">Clientes satisfechos</span>
           </div>
         </div>
@@ -124,7 +127,7 @@
       <div class="modular-grid">
 
         <!-- Tarjeta Modular 1: Trayectoria Olímpica & Programación Competitiva -->
-        <div class="modular-card" style="--accent:#f97316">
+        <div class="modular-card" style="--accent:#ff5c00">
           <div class="modular-card-header">
             <span class="modular-tag">Competencia Algorítmica</span>
             <h3 class="modular-title">Trayectoria Olímpica &amp; Programación Competitiva</h3>
@@ -170,7 +173,7 @@
         </div>
 
         <!-- Tarjeta Modular 2: Mentoría & Liderazgo Técnico -->
-        <div class="modular-card" style="--accent:#2ec4b6">
+        <div class="modular-card" style="--accent:#00c9a7">
           <div class="modular-card-header">
             <span class="modular-tag">Formación &amp; Comunidad</span>
             <h3 class="modular-title">Mentoría &amp; Liderazgo Técnico</h3>
@@ -212,7 +215,7 @@
 
         <!-- Card 1: Convertidor de archivos -->
         <div class="deck-card principal" id="card-1" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
-          <div class="card-image" style="background-color: #f97316;">
+          <div class="card-image" style="background: linear-gradient(135deg, #ff5c00 0%, #ff8c00 100%);">
             <img src="img/prewiew primero.png" alt="Convertidor de archivos">
           </div>
           <div class="card-content">
@@ -241,7 +244,7 @@
 
         <!-- Card 2: Flowi -->
         <div class="deck-card siguiente" id="card-2" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
-          <div class="card-image" style="background-color: #2ec4b6;">
+          <div class="card-image" style="background: linear-gradient(135deg, #00c9a7 0%, #0284c7 100%);">
             <img src="img/flowi-promo-instagram.svg" alt="Flowi sistema organizador">
           </div>
           <div class="card-content">
@@ -271,7 +274,7 @@
 
         <!-- Card 3: WorkHR -->
         <div class="deck-card siguiente2" id="card-3" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
-          <div class="card-image" style="background-color: #0ea5e9;">
+          <div class="card-image" style="background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);">
             <img src="img/workhr-post-ig-cuadrado.jpg" alt="WorkHR Administrador de personal">
           </div>
           <div class="card-content">
@@ -301,7 +304,7 @@
 
         <!-- Card 4: FitNets App -->
         <div class="deck-card oculto-derecha" id="card-4" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
-          <div class="card-image" style="background-color: #10b981;">
+          <div class="card-image" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
             <div class="card-icon-wrapper icon-fitnets">
               <svg viewBox="0 0 120 120" class="svg-animated-icon" aria-hidden="true">
                 <!-- Pulso cardíaco / ECG de fondo -->
@@ -360,7 +363,7 @@
 
         <!-- Card 5: Traductor HUD de Juegos -->
         <div class="deck-card oculto-derecha" id="card-5" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
-          <div class="card-image" style="background-color: #8b5cf6;">
+          <div class="card-image" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);">
             <div class="card-icon-wrapper icon-hud">
               <svg viewBox="0 0 120 120" class="svg-animated-icon" aria-hidden="true">
                 <!-- Marco / Retícula HUD Gamer -->
@@ -412,7 +415,7 @@
 
         <!-- Card 6: Crónicas Medievales -->
         <div class="deck-card oculto-derecha" id="card-6" ontouchstart="onTouchStart(event)" ontouchend="onTouchEnd(event)">
-          <div class="card-image" style="background-color: #e11d48;">
+          <div class="card-image" style="background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);">
             <div class="card-icon-wrapper icon-medieval">
               <svg viewBox="0 0 120 120" class="svg-animated-icon" aria-hidden="true">
                 <!-- Rejilla hexagonal táctica de fondo -->
@@ -551,14 +554,24 @@
       <h2 class="section-title">Hablemos</h2>
       <p class="contacto-sub">¿Tienes un proyecto en mente? Escríbeme y con gusto colaboramos.</p>
       
-      <form class="contact-form" onsubmit="handleSubmit(event)">
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <!-- Configuración FormSubmit AJAX -->
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off"/>
+        <input type="hidden" name="_template" value="table"/>
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portafolio web"/>
+
         <div class="form-row">
-          <input type="text" id="contactName" placeholder="Tu nombre" required/>
-          <input type="email" id="contactEmail" placeholder="Tu correo" required/>
+          <input type="text" id="contactName" name="nombre" placeholder="Tu nombre" required autocomplete="name"/>
+          <input type="email" id="contactEmail" name="email" placeholder="Tu correo" required autocomplete="email"/>
         </div>
-        <input type="text" id="contactSubject" placeholder="Asunto" required/>
-        <textarea id="contactMessage" placeholder="Cuéntame sobre tu proyecto..." rows="5" required></textarea>
-        <button type="submit" class="btn-submit">Enviar mensaje →</button>
+        <input type="text" id="contactSubject" name="asunto" placeholder="Asunto" required/>
+        <textarea id="contactMessage" name="mensaje" placeholder="Cuéntame sobre tu proyecto..." rows="5" required></textarea>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn-submit" id="submitBtn">Enviar mensaje →</button>
+        </div>
+
+        <div id="formStatus" class="form-status" style="display:none;" role="status" aria-live="polite"></div>
       </form>
       
       <div class="social-links">
@@ -581,6 +594,8 @@
     </div>
   </footer>
 
+  <!-- Librería Anime.js para animaciones fluidas y reactivas -->
+  <script src="anime.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
