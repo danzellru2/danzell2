@@ -2013,6 +2013,22 @@ section[id] {
   margin: 0;
 }
 
+.sc-hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+  background: var(--surface-alt);
+  border: 1px dashed var(--border);
+  padding: 8px 14px;
+  border-radius: 12px;
+  max-width: 320px;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.sc-hint strong {
+  color: var(--text);
+}
+
 .sc-reset {
   background: var(--surface-alt);
   border: 1px solid var(--border);

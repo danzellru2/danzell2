@@ -612,7 +612,10 @@ function handleSubmit(e) {
 
   isSubmitting = true;
   if (submitBtn) {
-    submitBtn.disabled = true;
+    submitBtn.style.pointerEvents = 'none';
+    setTimeout(() => {
+      if (submitBtn) submitBtn.disabled = true;
+    }, 120);
   }
 
   // Ejecutar la animación aerodinámica mejorada del avión
@@ -840,6 +843,7 @@ function resetFormState() {
         }
         if (submitBtn) {
           submitBtn.disabled = false;
+          submitBtn.style.pointerEvents = 'auto';
         }
         if (formInner) {
           formInner.style.visibility = 'visible';
